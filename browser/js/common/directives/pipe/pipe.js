@@ -14,13 +14,16 @@ app.directive('pipe',function($mdDialog,Pipeline){
 				// console.log("CHECK BUILD",scope.pipeline.pipelineId)
 				Pipeline.poll(scope.pipeline.pipelineId,scope.pipe.imageId)
 				.then(function(response){
-					if(response.data){
+					if(response.data ==='true'){
 						scope.icon = 'check';
 						scope.status = 'Ready';
-					}else{
+					}else if(response.data==='false'){
 						scope.icon='wrench';
 						scope.status='Building...';
 						setTimeout(scope.checkBuild,10000);
+					}else if(response.data==='error'){
+						scope.icon='exclamation-triangle';
+						scope.status='Error';
 					}
 				})
 			}

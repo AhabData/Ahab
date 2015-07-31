@@ -146,7 +146,7 @@ router.put('/', ensureAuthenticated, function(req, res, next) {
 					console.log('Here is your image iddd!!!!!', newPipe.imageId);
 					console.log(chalk.blue("Ran get repository, about to build image! :)"));
 					var targetDir = path.join(__dirname, '../../../../downloads');
-					return run.buildImage(newPipe.imageId, targetDir, newPipe.gitUrl);
+					return run.buildImage(newPipe.imageId, targetDir, newPipe.gitUrl,pipeline);
 				})
 				.then(function() {
 					console.log(chalk.blue("sending updated pipeline"));
@@ -155,14 +155,22 @@ router.put('/', ensureAuthenticated, function(req, res, next) {
 				.then(function(pipeline){
 					pipeline.pipeline.forEach(function(pipe){
 						if(pipe.imageId===newPipe.imageId)
-							pipe.built=true;
+							pipe.built='true';
 					})
 					pipeline.save(function(err, result){
 						if (err) reject (err);
 						else resolve(result);
 					});
 				})
-				.catch(reject);
+				.catch(function(){
+					pipeline.pipeline.forEach(function(pipe){
+						if(pipe.imageId===newPipe.imageId)
+							pipe.built='error';
+					})
+					pipeline.save(function(err, result){
+						reject();
+					});
+				})
 			});
 		});
 	})
