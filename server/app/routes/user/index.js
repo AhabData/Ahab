@@ -24,7 +24,7 @@ router.put('/', function(req, res, next) {
 	var len = Object.keys(updatedPipeline).length
 	var newPipeline;
 
-	if (req.body.image.imageId) {
+	if (req.body.image && req.body.image.imageId) {
 		cleanup.deleteImage(req.body.image.imageId)
 			.then(putNewPipeline)
 			.catch(function(err) {
