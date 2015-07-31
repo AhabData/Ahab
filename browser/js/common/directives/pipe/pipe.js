@@ -11,7 +11,7 @@ app.directive('pipe',function($mdDialog,Pipeline){
 
 
 			scope.checkBuild = function(){
-				console.log("CHECK BUILD",scope.pipeline.pipelineId)
+				// console.log("CHECK BUILD",scope.pipeline.pipelineId)
 				Pipeline.poll(scope.pipeline.pipelineId,scope.pipe.imageId)
 				.then(function(response){
 					if(response.data){

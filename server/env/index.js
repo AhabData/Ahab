@@ -5,5 +5,6 @@ var productionConfigPath = path.join(__dirname, './production.js');
 if (process.env.NODE_ENV === 'production') {
     module.exports = require(productionConfigPath);
 } else {
+	console.log("using dev config");
     module.exports = require(devConfigPath);
 }

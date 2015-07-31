@@ -91,7 +91,7 @@
         };
 
         this.gitLogin = function () {
-            window.location.href = "http://ahabdata.com/auth/github"
+            window.location.href = window.location+"auth/github"
         }
 
         this.logout = function () {
