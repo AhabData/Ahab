@@ -109,7 +109,7 @@ function deleteContainerDir(pipelineid) {
     })
 }
 
-function buildImage(imgName, targetDirectory, gitUrl) {
+function buildImage(imgName, targetDirectory, gitUrl,pipeline) {
   var username = gitUrl.split('/')[3];
   var repo = gitUrl.split('/')[4];
   var extractPromised = Promise.promisify(tar.extractTarball);
@@ -130,6 +130,16 @@ function buildImage(imgName, targetDirectory, gitUrl) {
         return
       })
       .fail(function(err) {
+            // console.log("About to set built as error");
+          // pipeline.pipeline.forEach(function(pipe){
+          //   if(pipe.imageId===imgName){
+          //     console.log(chalk.red("setting built as error"));
+          //     pipe.built='error';
+          //   }
+          // });
+          // pipeline.save(function(err, result){
+          //   console.log(chalk.red("Setting built to error"));
+          // });
         console.log("FAILING EXEC",err);
         exec('rm -rf ' + targetDirectory + '/' + dir);
         err.customMessage = "There was a problem building the image";
