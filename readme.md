@@ -1,4 +1,4 @@
-Ahab.io
+Ahab
 =========
 
 Introduction
